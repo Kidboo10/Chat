@@ -9,14 +9,13 @@ import java.time.LocalDateTime;
 
 public class ChatClient extends Thread {
     DatagramSocket socket;
-    int minPort = 55555;
+    int minPort = 12345;
     DatagramPacket packet;
     JTextArea textArea;
 
     public ChatClient(JTextArea textArea) {
         this.textArea = textArea;
         socket = null;
-        byte[] data = new byte[1024];
         try {
             socket = new DatagramSocket(minPort);
         } catch (SocketException e) {
@@ -33,9 +32,7 @@ public class ChatClient extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //String sender = packet.getAddress().getHostAddress();
-            //String sender = packet.getAddress().getHostName();
-            //String sender = packet.getAddress().getCanonicalHostName();
+
             String message = new String(packet.getData(),
                     0, packet.getLength());
             textArea.append(packet.getAddress() + ": " + message +"\n");
